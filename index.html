@@ -104,6 +104,9 @@
   .sort-key-highlight { color:var(--color-text-info); font-weight:500; }
   .footer { font-size:12px; color:var(--color-text-tertiary); margin-top:2rem; text-align:center; }
   .badge-internal { background:#FAEEDA; color:#854F0B; }
+  .badge-gpa-flex { background:#EAF3DE; color:#3B6D11; }
+  .pill-gpa { border-style:dashed; }
+  @media (prefers-color-scheme:dark){ .badge-gpa-flex { background:#173404 !important; color:#C0DD97 !important; } }
   @media (prefers-color-scheme:dark){ .badge-internal { background:#412402 !important; color:#FAC775 !important; } }
 </style>
 </head>
@@ -118,6 +121,7 @@
     <button class="pill" onclick="setFilter('luar',this)">Luar Negeri</button>
     <button class="pill" onclick="setFilter('pns-only',this)">Khusus PNS</button>
     <button class="pill" onclick="setFilter('confirmed',this)">Jadwal Pasti</button>
+    <button class="pill pill-gpa" onclick="setFilter('gpa-low',this)" title="Beasiswa yang bisa didaftar dengan IPK di bawah 2.75 atau tanpa syarat IPK minimum">IPK &lt; 2.75</button>
   </div>
 
   <div class="sort-bar">
@@ -142,146 +146,146 @@ const data = [
   {month:"Januari – Februari", m:1, items:[
     {title:"LPDP Targeted (PNS/TNI/Polri) – Tahap 1", type:"keduanya", pns:true, confirmed:true,
      date:"22 Jan – 23 Feb 2026", dest:"Dalam & Luar Negeri", tags:["Fully funded","Maks. 37 th S2"],
-     gpa:"Min. 3.00 / 4.00", link:"https://lpdp.kemenkeu.go.id", dateOpen:"2026-01-22", dateDeadline:"2026-02-23",
+     gpa:"Min. 3.00 / 4.00", gpaMin:3.00, link:"https://lpdp.kemenkeu.go.id", dateOpen:"2026-01-22", dateDeadline:"2026-02-23",
      note:"Satu-satunya jadwal LPDP Tahap 1 yang sudah resmi dikonfirmasi. Juga bisa daftar jalur Reguler & Afirmasi di periode yang sama."},
     {title:"Chinese Government Scholarship (CSC) – via Kedubes RRT", type:"luar", pns:false, confirmed:true,
      date:"Deadline 8 Feb 2026", dest:"Tiongkok", tags:["Fully funded","S2 & S3","280+ universitas"],
-     gpa:"Min. 3.00 / 4.00 (direkomendasikan)", link:"https://campuschina.org", dateOpen:"2026-01-05", dateDeadline:"2026-02-08",
+     gpa:"Min. 3.00 / 4.00 (direkomendasikan)", gpaMin:3.00, link:"https://campuschina.org", dateOpen:"2026-01-05", dateDeadline:"2026-02-08",
      note:"Beasiswa Pemerintah Tiongkok (China Scholarship Council). Dua jalur: Tipe A via Kedubes RRT Jakarta (tanpa LoA dulu) dan Tipe B langsung ke universitas tujuan. Cakupan: biaya kuliah, asrama, uang saku CNY 3.000/bln (S2). Bahasa pengantar Inggris atau Mandarin (min. HSK 4 untuk S2 berbahasa Mandarin). Terbuka untuk PNS."},
     {title:"China AUN Scholarship – Khusus Negara ASEAN", type:"luar", pns:false, confirmed:true,
      date:"Deadline 16 Feb 2026", dest:"Tiongkok", tags:["Fully funded","30 kuota ASEAN","S2 & S3"],
-     gpa:"Min. 3.00 / 4.00 (mengikuti standar CSC)", link:"https://www.aunsec.org", dateOpen:"2026-01-05", dateDeadline:"2026-02-16",
+     gpa:"Min. 3.00 / 4.00 (mengikuti standar CSC)", gpaMin:3.00, link:"https://www.aunsec.org", dateOpen:"2026-01-05", dateDeadline:"2026-02-16",
      note:"Program kolaborasi ASEAN-China di bawah CSC. Khusus WNI (negara ASEAN). 30 beasiswa per tahun untuk S2 dan S3. Daftar melalui Sekretariat AUN — tidak bisa langsung ke CSC. Pengumuman penerima Agustus 2026, kuliah September 2026."},
     {title:"TaiwanICDF International Higher Education Scholarship", type:"luar", pns:false, confirmed:true,
      date:"1 Des 2025 – 15 Mar 2026", dest:"Taiwan", tags:["Fully funded","NT$18.000/bln","Tanpa surat rekomendasi"],
-     gpa:"Min. 3.00 / 4.00", link:"https://www.icdf.org.tw/scholarship", dateOpen:"2025-12-01", dateDeadline:"2026-03-15",
+     gpa:"Min. 3.00 / 4.00", gpaMin:3.00, link:"https://www.icdf.org.tw/scholarship", dateOpen:"2025-12-01", dateDeadline:"2026-03-15",
      note:"Program beasiswa dari Taiwan International Cooperation and Development Fund. Indonesia eligible. Tersedia untuk S2 dan S3 di 20+ universitas mitra di Taiwan. Cakupan: biaya kuliah, asrama, tiket PP, asuransi, uang saku NT$18.000/bln (~Rp 9,5 jt). Tidak memerlukan surat rekomendasi. Semua program dalam bahasa Inggris. Terbuka untuk PNS."},
   ]},
   {month:"Februari", m:2, items:[
     {title:"Fulbright Master's Degree – AMINEF", type:"luar", pns:false, confirmed:true,
      date:"Deadline ~18 Feb 2026", dest:"Amerika Serikat", tags:["Fully funded","Tanpa batas usia"],
-     gpa:"Min. 3.00 / 4.00", link:"https://www.aminef.or.id", dateOpen:"2026-01-06", dateDeadline:"2026-02-18",
+     gpa:"Min. 3.00 / 4.00", gpaMin:3.00, link:"https://www.aminef.or.id", dateOpen:"2026-01-06", dateDeadline:"2026-02-18",
      note:"Dikelola AMINEF. Terbuka untuk PNS, syarat minimal TOEFL ITP 550 / IELTS 6.5. Daftar online di aminef.or.id."},
     {title:"Australia Awards Scholarship (AAS)", type:"luar", pns:false, confirmed:true,
      date:"1 Feb – 30 April 2026", dest:"Australia", tags:["Fully funded","PNS kategori GoI"],
-     gpa:"Min. 2.90 / 4.00", link:"https://www.australiaawardsindonesia.org", dateOpen:"2026-02-01", dateDeadline:"2026-04-30",
+     gpa:"Min. 2.90 / 4.00", gpaMin:2.90, link:"https://www.australiaawardsindonesia.org", dateOpen:"2026-02-01", dateDeadline:"2026-04-30",
      note:"PNS dari luar 15 provinsi sasaran masuk kategori 'Government of Indonesia' (GoI). PNS dari 15 provinsi target (Papua, NTT, Maluku, dll.) masuk kategori ETG/prioritas. Kuliah mulai 2027."},
     {title:"Beasiswa Unggulan Kemendikbud – Pegawai Kemendikbud", type:"dalam", pns:true, confirmed:true,
      date:"Buka ~awal Feb, tutup ~akhir Maret 2026", dest:"Dalam Negeri", tags:["Fully funded","Khusus pegawai Kemendikbud"],
-     gpa:"Min. 3.25 / 4.00", link:"https://beasiswaunggulan.kemendikdasmen.go.id", dateOpen:"2026-02-02", dateDeadline:"2026-03-31",
+     gpa:"Min. 3.25 / 4.00", gpaMin:3.25, link:"https://beasiswaunggulan.kemendikdasmen.go.id", dateOpen:"2026-02-02", dateDeadline:"2026-03-31",
      note:"Jalur khusus untuk PNS di lingkungan Kemendikbudristek/Kemendikdasmen. Esai wajib: 'Pengembangan Kompetensi Menuju ASN yang Adaptif'. Maks. usia 43 th (bebas jabatan) atau 48 th (sambil bertugas)."},
     {title:"Romanian Government Scholarship (MFA Rumania)", type:"luar", pns:false, confirmed:true,
      date:"16 Feb – 31 Maret 2026", dest:"Rumania", tags:["Fully funded","Tanpa batas usia","Tanpa IELTS"],
-     gpa:"Tidak ada minimum tetap (merit-based)", link:"https://scholarships.studyinromania.gov.ro", dateOpen:"2026-02-16", dateDeadline:"2026-03-31",
+     gpa:"Tidak ada minimum tetap (merit-based)", gpaMin:null, link:"https://scholarships.studyinromania.gov.ro", dateOpen:"2026-02-16", dateDeadline:"2026-03-31",
      note:"Beasiswa resmi Kementerian Luar Negeri Rumania. Untuk S1/S2/S3, semua bidang kecuali Kedokteran, Kedokteran Gigi, dan Farmasi. Bahasa pengantar Rumania (ada kelas bahasa 1 th gratis). S3 bisa dalam bahasa Inggris. Pengumuman ~15 Juli 2026. Terbuka untuk PNS."},
     {title:"GKS – Global Korea Scholarship S2/S3 (Korea Selatan)", type:"luar", pns:false, confirmed:false,
      date:"Estimasi pertengahan Feb – pertengahan Mar 2026", dest:"Korea Selatan", tags:["Fully funded","Maks. 40 th untuk S2"],
-     gpa:"Min. 2.64 / 4.00 (ekuivalen 80/100)", link:"https://www.studyinkorea.go.kr/en/sub/gks/allnew_invite.do", dateOpen:"2026-02-15", dateDeadline:"2026-03-15",
+     gpa:"Min. 2.64 / 4.00 (ekuivalen 80/100)", gpaMin:2.64, link:"https://www.studyinkorea.go.kr/en/sub/gks/allnew_invite.do", dateOpen:"2026-02-15", dateDeadline:"2026-03-15",
      note:"Dikelola NIIED Korea. Dua jalur: Embassy Track (via Kedubes Korea di Jakarta, pilih 3 kampus) dan University Track (langsung ke 1 kampus). Cakupan: biaya kuliah, tunjangan bulanan ~1 juta KRW, tiket PP, asuransi. Pola pendaftaran S2: Feb–Mar, pengumuman Mei–Juni. Terbuka untuk PNS, maks. usia 40 tahun."},
     {title:"Erasmus Mundus Joint Master (EMJM)", type:"luar", pns:false, confirmed:true,
      date:"Call deadline ~Feb 2026, tiap program bervariasi", dest:"Eropa (2–3 negara)", tags:["Fully funded","Lintas negara"],
-     gpa:"Bervariasi per konsorsium, umumnya min. 3.00 / 4.00", link:"https://www.eacea.ec.europa.eu/scholarships/emjmd-catalogue_en", dateOpen:"2025-11-01", dateDeadline:"2026-02-28",
+     gpa:"Bervariasi per konsorsium, umumnya min. 3.00 / 4.00", gpaMin:3.00, link:"https://www.eacea.ec.europa.eu/scholarships/emjmd-catalogue_en", dateOpen:"2025-11-01", dateDeadline:"2026-02-28",
      note:"Program Eropa lintas negara. Terbuka untuk PNS. Call resmi sudah buka sejak Nov 2025. Cek deadline masing-masing konsorsium di katalog EMJMD."},
     {title:"Tugas Belajar APBN BPS (S2 Dalam Negeri)", type:"dalam", pns:true, confirmed:false,
      date:"Estimasi Feb – Apr 2026 (pengumuman internal)", dest:"Dalam Negeri (ITB, UGM, UNPAD, UNDIP, UNAIR, IPB, UB)", tags:["Fully funded","Khusus pegawai BPS","Internal","S2 & S3"],
-     gpa:"Min. 3.00 / 4.00 (penilaian internal TSPDI)", link:"https://pusdiklat.bps.go.id", dateOpen:"2026-02-01", dateDeadline:"2026-04-30",
+     gpa:"Min. 3.00 / 4.00 (penilaian internal TSPDI)", gpaMin:3.00, link:"https://pusdiklat.bps.go.id", dateOpen:"2026-02-01", dateDeadline:"2026-04-30",
      internal:true,
      note:"Program Tugas Belajar APBN yang diselenggarakan BPS setiap tahun. KHUSUS pegawai BPS — bukan open registration. Mekanisme: unit kerja menominasikan pegawai → tes masuk di kampus mitra → seleksi final oleh Tim Seleksi Peserta Diklat Instansi (TSPDI) BPS. Kampus mitra: ITB, UGM, UNPAD, UNDIP, UNAIR, IPB, Universitas Brawijaya. Pantau pengumuman di intranet BPS atau pusdiklat.bps.go.id."},
   ]},
   {month:"Maret – April", m:3, items:[
     {title:"Manaaki New Zealand Scholarship", type:"luar", pns:false, confirmed:true,
      date:"1 – 31 Maret 2026", dest:"Selandia Baru", tags:["Fully funded","Indonesia eligible"],
-     gpa:"Tidak ada minimum formal (kompetitif, merit-based)", link:"https://www.nzscholarships.govt.nz", dateOpen:"2026-03-01", dateDeadline:"2026-03-31",
+     gpa:"Tidak ada minimum formal (kompetitif, merit-based)", gpaMin:null, link:"https://www.nzscholarships.govt.nz", dateOpen:"2026-03-01", dateDeadline:"2026-03-31",
      note:"Program resmi Pemerintah Selandia Baru (MFAT). Indonesia termasuk negara eligible. Terbuka untuk S2 dan PhD. Cakupan: biaya kuliah penuh, tunjangan hidup, asuransi kesehatan, tiket PP, biaya tesis. Preferensi usia di bawah 40 th. IELTS min. 6.5. Portal bisa tutup lebih awal jika kuota penuh — daftar secepatnya. Terbuka untuk PNS."},
     {title:"Malaysia International Scholarship (MIS)", type:"luar", pns:false, confirmed:true,
      date:"4 Maret – 3 April 2026", dest:"Malaysia", tags:["Fully funded","S2 & S3","Maks. 40 th"],
-     gpa:"Min. 3.00 / 4.00", link:"https://biasiswa.mohe.gov.my", dateOpen:"2026-03-04", dateDeadline:"2026-04-03",
+     gpa:"Min. 3.00 / 4.00", gpaMin:3.00, link:"https://biasiswa.mohe.gov.my", dateOpen:"2026-03-04", dateDeadline:"2026-04-03",
      note:"Program resmi Kementerian Pendidikan Malaysia. Indonesia eligible. S2 maks. 40 th, S3 maks. 45 th. IPK min. 3.0, IELTS min. 6.0 atau TOEFL PBT 550. Tunjangan hidup RM 1.500/bln. Terbuka untuk PNS."},
     {title:"Beasiswa Unggulan Kemendikbud – Masyarakat Berprestasi", type:"dalam", pns:false, confirmed:false,
      date:"Estimasi Maret–April 2026", dest:"Dalam Negeri", tags:["Fully funded"],
-     gpa:"Min. 3.25 / 4.00", link:"https://beasiswaunggulan.kemendikdasmen.go.id", dateOpen:"2026-03-01", dateDeadline:"2026-04-30",
+     gpa:"Min. 3.25 / 4.00", gpaMin:3.25, link:"https://beasiswaunggulan.kemendikdasmen.go.id", dateOpen:"2026-03-01", dateDeadline:"2026-04-30",
      note:"Berdasarkan pola 2025. Catatan: FAQ resmi Kemendikbud menyebut pendaftaran di 'Minggu II–IV Juli', namun sumber lain mengindikasikan pembukaan lebih awal di 2026. Pantau website resmi."},
     {title:"Hubert H. Humphrey Fellowship – AMINEF", type:"luar", pns:false, confirmed:true,
      date:"Deadline ~April 2026", dest:"Amerika Serikat", tags:["Non-gelar","Mid-career profesional"],
-     gpa:"Tidak ada minimum IPK (pengalaman kerja lebih diutamakan)", link:"https://www.aminef.or.id", dateOpen:"2026-02-02", dateDeadline:"2026-04-30",
+     gpa:"Tidak ada minimum IPK (pengalaman kerja lebih diutamakan)", gpaMin:null, link:"https://www.aminef.or.id", dateOpen:"2026-02-02", dateDeadline:"2026-04-30",
      note:"Program non-gelar 10 bulan di AS untuk profesional aktif (termasuk PNS). Berfokus pada kepemimpinan dan pertukaran pengetahuan, bukan gelar S2 formal."},
     {title:"DAAD EPOS – Beasiswa S2 Bidang Pembangunan (Jerman)", type:"luar", pns:false, confirmed:true,
      date:"Bervariasi per program, paling akhir 15 Mar 2026", dest:"Jerman", tags:["Fully funded","Min. 2 th kerja","Bidang pembangunan"],
-     gpa:"Di atas rata-rata (umumnya ≥ 3.00 / 4.00)", link:"https://www.daad.de/en/studying-in-germany/scholarships/epos/", dateOpen:"2025-12-01", dateDeadline:"2026-03-15",
+     gpa:"Di atas rata-rata (umumnya ≥ 3.00 / 4.00)", gpaMin:3.00, link:"https://www.daad.de/en/studying-in-germany/scholarships/epos/", dateOpen:"2025-12-01", dateDeadline:"2026-03-15",
      note:"Program DAAD untuk profesional dari negara berkembang (Indonesia eligible). Khusus S2 bidang relevan dengan pembangunan: ekonomi internasional, manajemen, media, lingkungan, hukum. Salah satu program unggulan: International Media Studies (deadline 15 Mar 2026). Syarat: min. 2 tahun kerja. Terbuka untuk PNS."},
     {title:"Kazakhstan Government Scholarship (Pelajar Asing)", type:"luar", pns:false, confirmed:false,
      date:"Estimasi 30 Maret – 31 Mei 2026", dest:"Kazakhstan", tags:["Fully funded","Semua bidang"],
-     gpa:"Min. 2.75 / 4.00 (ekuivalen 70/100)", link:"https://studyin.kz", dateOpen:"2026-03-30", dateDeadline:"2026-05-31",
+     gpa:"Min. 2.75 / 4.00 (ekuivalen 70/100)", gpaMin:2.75, link:"https://studyin.kz", dateOpen:"2026-03-30", dateDeadline:"2026-05-31",
      note:"Program Kementerian Pendidikan Kazakhstan untuk pelajar asing (bukan Bolashak — Bolashak khusus warga Kazakhstan). 550 beasiswa tersedia: 490 S1, 50 S2, 10 PhD. Cakupan: biaya kuliah, asrama, uang saku. Indonesia eligible. Pola 2025: buka 30 Mar–31 Mei. Sangat cocok bidang sains, teknik, sosial."},
   ]},
   {month:"April – Mei", m:4, items:[
     {title:"MEXT (Beasiswa Pemerintah Jepang) – Jalur Kedutaan", type:"luar", pns:false, confirmed:false,
      date:"Estimasi April–Juni 2026", dest:"Jepang", tags:["Fully funded","Tunjangan ¥144.000/bln"],
-     gpa:"Min. 2.87 / 4.00 (ekuivalen 3.2 / 5 atau 75/100)", link:"https://www.id.emb-japan.go.jp/sch.html", dateOpen:"2026-04-01", dateDeadline:"2026-06-30",
+     gpa:"Min. 2.87 / 4.00 (ekuivalen 3.2 / 5 atau 75/100)", gpaMin:2.87, link:"https://www.id.emb-japan.go.jp/sch.html", dateOpen:"2026-04-01", dateDeadline:"2026-06-30",
      note:"Dibuka Kedubes Jepang di Jakarta. PNS dapat mendaftar. Cakupan: biaya kuliah penuh, tunjangan bulanan ~¥144.000 (~Rp 15 jt), tiket pesawat PP. Cek website Kedubes Jepang untuk jadwal pasti 2026."},
     {title:"DAAD Study Scholarship – STEM S2 (Jerman)", type:"luar", pns:false, confirmed:false,
      date:"Estimasi April – Mei 2026 (pola tahunan)", dest:"Jerman", tags:["Fully funded","Khusus STEM","Min. 2 th kerja"],
-     gpa:"Di atas rata-rata (umumnya ≥ 3.00 / 4.00)", link:"https://www.daad.de/en/studying-in-germany/scholarships/study-scholarships/", dateOpen:"2026-04-01", dateDeadline:"2026-05-15",
+     gpa:"Di atas rata-rata (umumnya ≥ 3.00 / 4.00)", gpaMin:3.00, link:"https://www.daad.de/en/studying-in-germany/scholarships/study-scholarships/", dateOpen:"2026-04-01", dateDeadline:"2026-05-15",
      note:"Beasiswa DAAD untuk S2 bidang STEM (matematika, ilmu komputer, sains, teknik) di universitas Jerman. Kuliah mulai Oktober 2026. Cakupan: tunjangan ~€934/bln, tunjangan perjalanan, asuransi. Maks. 6 tahun sejak lulus S1. Terbuka untuk PNS."},
     {title:"Beasiswa Indonesia Bangkit (BIB) – Kemenag + LPDP", type:"keduanya", pns:true, confirmed:false,
      date:"Estimasi Mei – Juni 2026", dest:"Dalam & Luar Negeri", tags:["Fully funded","S2 & S3","PNS Kemenag eligible"],
-     gpa:"Min. 3.00 / 4.00 (DN) · Min. 3.25 / 4.00 (LN)", link:"https://beasiswa.kemenag.go.id", dateOpen:"2026-05-01", dateDeadline:"2026-06-30",
+     gpa:"Min. 3.00 / 4.00 (DN) · Min. 3.25 / 4.00 (LN)", gpaMin:3.00, link:"https://beasiswa.kemenag.go.id", dateOpen:"2026-05-01", dateDeadline:"2026-06-30",
      note:"Kolaborasi Kementerian Agama dan LPDP. PNS di lingkungan Kemenag (guru madrasah, dosen PTKIN, dsb.) dapat mendaftar. Cakupan S2 dalam negeri: biaya kuliah, tunjangan hidup, biaya penelitian, transportasi, asuransi. Kuota 2025: ~870 orang S1-S3."},
   ]},
   {month:"Juni – Juli", m:6, items:[
     {title:"DAAD Helmut-Schmidt – S2 Kebijakan Publik & Good Governance", type:"luar", pns:true, confirmed:true,
      date:"1 Juni – 31 Juli 2026", dest:"Jerman", tags:["Fully funded","Sangat relevan PNS","Min. 5 bln kerja"],
-     gpa:"Di atas rata-rata (umumnya ≥ 3.00 / 4.00)", link:"https://www.daad.de/en/studying-in-germany/scholarships/helmut-schmidt-programme/", dateOpen:"2026-06-01", dateDeadline:"2026-07-31",
+     gpa:"Di atas rata-rata (umumnya ≥ 3.00 / 4.00)", gpaMin:3.00, link:"https://www.daad.de/en/studying-in-germany/scholarships/helmut-schmidt-programme/", dateOpen:"2026-06-01", dateDeadline:"2026-07-31",
      note:"Beasiswa DAAD khusus S2 di bidang kebijakan publik, administrasi pemerintahan, dan tata kelola (good governance) — sangat relevan untuk PNS. Terbuka untuk warga negara berkembang termasuk Indonesia. Syarat: min. 5 bulan pengalaman kerja relevan, bahasa Inggris min. C1. Intake untuk akademik 2027/28."},
     {title:"LPDP Targeted (PNS/TNI/Polri) – Tahap 2", type:"keduanya", pns:true, confirmed:false,
      date:"Estimasi akhir Juni – Juli 2026", dest:"Dalam & Luar Negeri", tags:["Fully funded","Maks. 37 th S2"],
-     gpa:"Min. 3.00 / 4.00", link:"https://lpdp.kemenkeu.go.id", dateOpen:"2026-06-30", dateDeadline:"2026-07-31",
+     gpa:"Min. 3.00 / 4.00", gpaMin:3.00, link:"https://lpdp.kemenkeu.go.id", dateOpen:"2026-06-30", dateDeadline:"2026-07-31",
      note:"Pola dari Tahap 2 2025: buka 30 Jun – 31 Jul. Pengumuman akhir ~Nov 2026, kuliah mulai Jan 2027. Juga berlaku untuk jalur Reguler & Afirmasi di periode yang sama."},
     {title:"LPDP–AAS (Kolaborasi LPDP & Australia Awards)", type:"luar", pns:true, confirmed:false,
      date:"Estimasi ikut jadwal LPDP Tahap 2", dest:"Australia", tags:["Fully funded","Terbuka CPNS/PNS"],
-     gpa:"Min. 3.00 / 4.00", link:"https://lpdp.kemenkeu.go.id", dateOpen:"2026-06-30", dateDeadline:"2026-07-31",
+     gpa:"Min. 3.00 / 4.00", gpaMin:3.00, link:"https://lpdp.kemenkeu.go.id", dateOpen:"2026-06-30", dateDeadline:"2026-07-31",
      note:"Program kolaborasi untuk S2 bidang blue economy, green energy, dan digital IT di universitas Australia. Daftar via portal LPDP. TNI/Polri tidak dapat mendaftar program ini."},
     {title:"Beasiswa Unggulan – Masyarakat Berprestasi", type:"dalam", pns:false, confirmed:true,
      date:"Minggu II–IV Juli 2026 (per FAQ resmi)", dest:"Dalam Negeri", tags:["Fully funded","IPK min. 3.0"],
-     gpa:"Min. 3.25 / 4.00", link:"https://beasiswaunggulan.kemendikdasmen.go.id", dateOpen:"2026-07-08", dateDeadline:"2026-07-25",
+     gpa:"Min. 3.25 / 4.00", gpaMin:3.25, link:"https://beasiswaunggulan.kemendikdasmen.go.id", dateOpen:"2026-07-08", dateDeadline:"2026-07-25",
      note:"Jadwal per FAQ resmi Kemendikbud. PNS boleh mendaftar via jalur Masyarakat Berprestasi selama memenuhi syarat umum."},
   ]},
   {month:"Juli – Agustus", m:7, items:[
     {title:"Hubert H. Humphrey Fellowship – AMINEF (Deadline Final)", type:"luar", pns:false, confirmed:true,
      date:"Deadline 15 Juli 2026", dest:"Amerika Serikat", tags:["Non-gelar","Mid-career"],
-     gpa:"Tidak ada minimum IPK (pengalaman kerja lebih diutamakan)", link:"https://www.aminef.or.id", dateOpen:"2026-02-02", dateDeadline:"2026-07-15",
+     gpa:"Tidak ada minimum IPK (pengalaman kerja lebih diutamakan)", gpaMin:null, link:"https://www.aminef.or.id", dateOpen:"2026-02-02", dateDeadline:"2026-07-15",
      note:"Deadline final per website resmi aminef.or.id. Fellowship non-gelar 10 bulan. Sangat relevan untuk PNS setingkat manajer/eselon."},
     {title:"Beasiswa SEARCA (S2 Asia Tenggara)", type:"luar", pns:false, confirmed:false,
      date:"Estimasi Agustus 2026", dest:"Malaysia, Taiwan, Korea, Jepang", tags:["Fully funded","Bidang pertanian/lingkungan"],
-     gpa:"Min. 2.75 / 4.00", link:"https://www.searca.org/scholarships", dateOpen:"2026-08-01", dateDeadline:"2026-08-31",
+     gpa:"Min. 2.75 / 4.00", gpaMin:2.75, link:"https://www.searca.org/scholarships", dateOpen:"2026-08-01", dateDeadline:"2026-08-31",
      note:"Sasaran utama PNS, dosen, dan peneliti. Bidang: pertanian, perikanan, kehutanan, lingkungan, ilmu sosial. Di Indonesia bekerja sama dengan UGM dan IPB. Cek searca.org untuk jadwal pasti."},
   ]},
   {month:"Agustus – Oktober", m:8, items:[
     {title:"Chevening 2026/2027 (Pemerintah Inggris)", type:"luar", pns:false, confirmed:false,
      date:"Estimasi Agustus – Oktober 2026", dest:"Inggris", tags:["Fully funded","Min. 2 th pengalaman kerja"],
-     gpa:"Min. 3.00 / 4.00 (setara upper second class honours)", link:"https://www.chevening.org/apply/", dateOpen:"2026-08-01", dateDeadline:"2026-10-31",
+     gpa:"Min. 3.00 / 4.00 (setara upper second class honours)", gpaMin:3.00, link:"https://www.chevening.org/apply/", dateOpen:"2026-08-01", dateDeadline:"2026-10-31",
      note:"Pola tahunan: buka Agustus, tutup Oktober, wawancara Maret–April tahun berikutnya. PNS aktif dapat mendaftar. Terbuka untuk semua WNI tanpa batas usia. Kuliah mulai Sep/Oct 2027."},
     {title:"Schwarzman Scholars (S2 di Tsinghua, China)", type:"luar", pns:false, confirmed:false,
      date:"Estimasi Agustus – September 2026", dest:"Tiongkok (Tsinghua University)", tags:["Fully funded","Program 1 tahun"],
-     gpa:"Tidak ada minimum formal (sangat kompetitif, umumnya ≥ 3.50 / 4.00)", link:"https://www.schwarzmanscholars.org", dateOpen:"2026-08-01", dateDeadline:"2026-09-30",
+     gpa:"Tidak ada minimum formal (sangat kompetitif, umumnya ≥ 3.50 / 4.00)", gpaMin:3.50, link:"https://www.schwarzmanscholars.org", dateOpen:"2026-08-01", dateDeadline:"2026-09-30",
      note:"Program master 1 tahun di Tsinghua University Beijing. Fokus kepemimpinan global. Terbuka untuk PNS. Sangat kompetitif."},
     {title:"Beasiswa Bappenas (Pusbindiklatren) – Siklus 2027", type:"keduanya", pns:true, confirmed:false,
      date:"Estimasi September – Oktober 2026", dest:"Dalam Negeri + NUS/Monash", tags:["Khusus PNS perencana"],
-     gpa:"Min. 2.75 / 4.00 (golongan III/a ke atas)", link:"https://pusbindiklatren.bappenas.go.id", dateOpen:"2026-09-01", dateDeadline:"2026-10-31",
+     gpa:"Min. 2.75 / 4.00 (golongan III/a ke atas)", gpaMin:2.75, link:"https://pusbindiklatren.bappenas.go.id", dateOpen:"2026-09-01", dateDeadline:"2026-10-31",
      note:"Khusus PNS di unit perencanaan (Bappeda, Biroren, dll.), golongan min. III/a, min. 1 tahun kerja. Pendaftaran siklus 2027 diperkirakan buka Sep–Okt 2026 dengan kampus tujuan NUS Singapore dan Monash University Indonesia."},
     {title:"Beasiswa KOMDIGI (S2 Transformasi Digital)", type:"keduanya", pns:true, confirmed:false,
      date:"Estimasi Feb (DN) – Apr 2026 (LN)", dest:"Dalam & Luar Negeri", tags:["Untuk PNS/ASN bidang TIK"],
-     gpa:"Min. 3.00 / 4.00", link:"https://beasiswa.kominfo.go.id", dateOpen:"2026-02-01", dateDeadline:"2026-04-30",
+     gpa:"Min. 3.00 / 4.00", gpaMin:3.00, link:"https://beasiswa.kominfo.go.id", dateOpen:"2026-02-01", dateDeadline:"2026-04-30",
      note:"Program Kementerian Komunikasi dan Digital (dulu Kominfo) untuk PNS/ASN. Fokus: TI, keamanan siber, e-government, kebijakan digital. Pola 2024: LN deadline 30 April, DN biasanya lebih awal. Syarat: masa kerja min. 2 th, maks. 37 th (atau 42 th daerah 3T). Pantau beasiswa.kominfo.go.id atau komdigi.go.id."},
   ]},
   {month:"September – Oktober", m:9, items:[
     {title:"Chulabhorn Graduate Institute (CGI) – Thailand", type:"luar", pns:false, confirmed:false,
      date:"Estimasi September – Oktober 2026", dest:"Thailand", tags:["Fully funded","Sains & kesehatan"],
-     gpa:"Min. 2.75 / 4.00", link:"https://www.cgischolar.com", dateOpen:"2026-09-01", dateDeadline:"2026-09-30",
+     gpa:"Min. 2.75 / 4.00", gpaMin:2.75, link:"https://www.cgischolar.com", dateOpen:"2026-09-01", dateDeadline:"2026-09-30",
      note:"S2 gratis di Thailand, bidang sains dan kesehatan. Cakupan: biaya kuliah, tiket PP, akomodasi, uang saku. Terbuka untuk PNS. Pola tahun sebelumnya: tutup ~30 September."},
     {title:"Australia Awards Scholarship – Siklus 2028 (Persiapan)", type:"luar", pns:false, confirmed:false,
      date:"Persiapan mulai Sep–Okt 2026, daftar diperkirakan Feb 2027", dest:"Australia", tags:["Fully funded","PNS kategori GoI"],
-     gpa:"Min. 2.90 / 4.00", link:"https://www.australiaawardsindonesia.org", dateOpen:"2027-02-01", dateDeadline:"2027-04-30",
+     gpa:"Min. 2.90 / 4.00", gpaMin:2.90, link:"https://www.australiaawardsindonesia.org", dateOpen:"2027-02-01", dateDeadline:"2027-04-30",
      note:"Untuk intake 2028, pendaftaran kemungkinan buka Feb 2027. Persiapan dokumen (IELTS, dll.) sebaiknya dimulai Sep–Okt 2026 jika menargetkan siklus ini."},
   ]},
   {month:"Oktober – Desember", m:10, items:[
@@ -291,11 +295,11 @@ const data = [
      note:"Penutupan pendaftaran Chevening untuk intake 2027. Deadline pengiriman dokumen dan referensi biasanya sekitar Oktober–November."},
     {title:"France Excellence Eiffel Scholarship – Siklus 2027", type:"luar", pns:false, confirmed:false,
      date:"Buka ~1 Okt – 8 Nov 2026 (pola tahunan)", dest:"Prancis", tags:["Fully funded sebagian","Maks. 29 th S2","Sains, Teknik, Hukum"],
-     gpa:"Min. 3.50 / 4.00 (sangat kompetitif)", link:"https://www.campusfrance.org/en/eiffel-excellence-scholarship-programme", dateOpen:"2026-10-01", dateDeadline:"2026-11-08",
+     gpa:"Min. 3.50 / 4.00 (sangat kompetitif)", gpaMin:3.50, link:"https://www.campusfrance.org/en/eiffel-excellence-scholarship-programme", dateOpen:"2026-10-01", dateDeadline:"2026-11-08",
      note:"Program Kementerian Luar Negeri Prancis untuk S2 dan S3 di universitas Prancis. Catatan penting: pendaftaran TIDAK bisa langsung — harus dinominasikan oleh universitas Prancis tujuan. Cakupan: tunjangan €1.200/bln (S2), tiket PP, asuransi. Tuition fees TIDAK ditanggung. Maks. usia 29 th untuk S2. Indonesia masuk daftar prioritas (Asia-Oceania)."},
     {title:"Beasiswa Turkiye Burslari (Pemerintah Turki)", type:"luar", pns:false, confirmed:false,
      date:"Estimasi Jan–Feb 2027 (persiapan mulai Des 2026)", dest:"Turki", tags:["Fully funded","Semua bidang"],
-     gpa:"Min. 2.50 / 4.00 (ekuivalen 70/100)", link:"https://www.turkiyeburslari.gov.tr", dateOpen:"2027-01-01", dateDeadline:"2027-02-28",
+     gpa:"Min. 2.50 / 4.00 (ekuivalen 70/100)", gpaMin:2.50, link:"https://www.turkiyeburslari.gov.tr", dateOpen:"2027-01-01", dateDeadline:"2027-02-28",
      note:"Beasiswa pemerintah Turki untuk S2. Fully funded. Pola pendaftaran: biasanya Januari–Februari. Terbuka untuk PNS."},
   ]},
 ];
@@ -360,6 +364,7 @@ function getFiltered(items) {
     if (currentFilter === 'luar')     return item.type === 'luar';
     if (currentFilter === 'pns-only') return item.pns;
     if (currentFilter === 'confirmed')return item.confirmed;
+    if (currentFilter === 'gpa-low')  return item.gpaMin === null || item.gpaMin < 2.75;
     return true;
   });
 }
@@ -384,6 +389,9 @@ function cardHtml(item, highlightField) {
   const internalBadge = item.internal ? `<span class="badge badge-internal">⚙ Internal Instansi</span>` : '';
   const pnsTag  = item.pns ? `<span class="tag tag-pns">Khusus PNS</span>` : '';
   const tags    = item.tags.map(t => `<span class="tag">${t}</span>`).join('');
+  const gpaLow = item.gpaMin === null || item.gpaMin < 2.75;
+  const gpaFlexBadge = (currentFilter === 'gpa-low' && gpaLow)
+    ? `<span class="badge badge-gpa-flex">✓ IPK fleksibel</span>` : '';
   const gpaHtml = item.gpa  ? `<div class="card-gpa"><span class="gpa-label">IPK</span> ${item.gpa}</div>` : '';
   const linkHtml= item.link ? `<a class="card-link" href="${item.link}" target="_blank" rel="noopener">Website Resmi ↗</a>` : '';
 
@@ -401,7 +409,7 @@ function cardHtml(item, highlightField) {
     <div class="card-body">
       <div class="card-head">
         <span class="card-title">${item.title}</span>
-        <div class="badges">${destBadge}${statusBadge}${internalBadge}</div>
+        <div class="badges">${destBadge}${statusBadge}${internalBadge}${gpaFlexBadge}</div>
       </div>
       <div class="card-date">🗓 ${item.date}</div>
       ${sortMeta}
